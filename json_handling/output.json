@@ -1,10 +1,11 @@
 {
-    "username": "Sheik",
+    "name": "Sheik",
     "age": 24,
     "is_dev": true,
     "Hobbies": [
         "Coding",
-        "Reading",
-        "Traveling"
+        "Traveling",
+        "Cooking",
+        "Singing"
     ]
 }
