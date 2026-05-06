@@ -98,3 +98,5 @@ addition(2,3)
 subtraction(5,2)
 multiplication(4,5)
 division(10,2)
+import modules
+print(dir(modules)) # this will list all the names in the current local scope, including functions, variables, and imported modules.
