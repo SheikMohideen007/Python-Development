@@ -27,3 +27,28 @@ def get_user(user_id:int):
 @app.get("/search")
 def search_user(name: str):
     return {'name': name, 'message': 'User found'}
+
+# POST request
+@app.post('/login')
+def login(name,password):
+    return {'name':name,'password':password}
+
+from pydantic import BaseModel
+import requests
+class LoginRequestModel(BaseModel):
+    name:str
+    password:str
+
+class LoginResponseModel(BaseModal):
+    name:str
+    string:str
+
+
+@app.post('/removePassword',response_model=LoginResponseModel)
+def removePass(request:LoginRequestModel):
+    if not request.password.strip():
+        raise fastapi.HTTPException(status_code=400, detail="Password cannot be empty")
+    
+    return {
+        
+    }
