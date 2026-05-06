@@ -1,11 +1,12 @@
 # Functions in Python
 
+# Function to greet a user with their name
 def funcWithParam(name: str) -> str:
     return f"\nHello {name}"
 
 print(funcWithParam("Sheik"))
 
-# Default argument example
+# Function to ask for user confirmation with retries and reminders
 def ask_ok(prompt, retries=4, reminder='Please try again!'):
     while True:
         reply = input(prompt)
@@ -18,7 +19,7 @@ def ask_ok(prompt, retries=4, reminder='Please try again!'):
             raise ValueError('invalid user response')
         print(reminder)
 
-# Exception handling in functions
+# Function to demonstrate exception handling
 def checkTheNumber(number: int):
     try:
         if number % 0 == 0:
@@ -30,24 +31,28 @@ def checkTheNumber(number: int):
 
 checkTheNumber(10)
 
+# Function to greet a list of names
 def greet(name: list):
     return f"Hello {name}"
 
 print(greet(['Sheik','Shemo','Mohideen']))
 
+# Function to greet a user with their name and age
 def greet(name, age):
     return f"{name} is {age}"
 
 print(greet('Sheik',23))
 print(greet(age=23,name='Sheik'))
 
+# Function with a default parameter for name
 def name(name='Shemo'):
     return f"Hello {name}"
 
 print(name())
 print(name("Mohideen"))
 
-def check(name:str):
+# Function to check and return a greeting for a name
+def check(name: str):
     return f"Hello {name}"
 
 print(check(1))
