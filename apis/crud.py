@@ -2,6 +2,17 @@ from fastapi import FastAPI,Request,APIRouter
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from uvicorn import run
+from pydantic import BaseModel, ValidationError
+
+class AddItemRequest(BaseModel):
+    item: int
+
+class UpdateItemRequest(BaseModel):
+    index: int
+    value: int
+
+class RemoveItemRequest(BaseModel):
+    item: int
 
 def create_app()->FastAPI:
     app = FastAPI(debug=True, title="CRUD API", description="A simple CRUD API using FastAPI",
@@ -40,30 +51,30 @@ arr=[1,2,3,4,5]
 
 
 @router.post("/add")
-async def add_item(item:int):
-    arr.append(item)
+async def add_item(request: AddItemRequest):
+    arr.append(request.item)
     return JSONResponse(
         status_code=200,
-        content={"message": "Success", "item": item}
+        content={"message": "Success", "item": request.item}
     )
 
 @router.delete('/remove')
-async def remove_item(item:int):
+async def remove_item(request: RemoveItemRequest):
     if len(arr)==0:
         return JSONResponse(
             status_code=400,
             content={"message": "There is no item to remove from the list"}
         )
-    if item in arr:
-        arr.remove(item)
+    if request.item in arr:
+        arr.remove(request.item)
         return JSONResponse(
             status_code=200,
-            content={"message": "Success", "removed": item}
+            content={"message": "Success", "removed": request.item}
         )
     else:
         return JSONResponse(
             status_code=404,
-            content={"message": "Item not found in the list", "item": item}
+            content={"message": "Item not found in the list", "item": request.item}
         )
 
 @router.get('/get')
@@ -78,16 +89,16 @@ async def getItem():
 
 
 @router.put('/update')
-async  def update_item(index:int,value:int):
-    if index >= len(arr) or index < 0:
+async  def update_item(request: UpdateItemRequest):
+    if request.index >= len(arr) or request.index < 0:
         return JSONResponse(
             status_code=400,
-            content={"message": f"Index {index} is out of bounds. Valid range: 0-{len(arr)-1}"}
+            content={"message": f"Index {request.index} is out of bounds. Valid range: 0-{len(arr)-1}"}
         )
-    old_value = arr[index]
-    arr[index]=value
+    old_value = arr[request.index]
+    arr[request.index]=request.value
     return JSONResponse(
-        content={"message": "Success", "old_value": old_value, "new_value": value,"items":arr},
+        content={"message": "Success", "old_value": old_value, "new_value": request.value,"items":arr},
         status_code=200
     )
 
