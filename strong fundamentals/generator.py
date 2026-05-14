@@ -33,6 +33,14 @@ def generator(str):
 
 gen=generator(str)
 
+# print(gen.__next__())
 for i in gen:
     print(i)
+
+
+val=(i for i in range(1000000000))
+print(val)
+for i in range(10):
+    print(val.__next__())
+
 
