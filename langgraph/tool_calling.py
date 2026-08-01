@@ -3,7 +3,7 @@ from typing import Annotated, TypedDict
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.tools import tool,Tool
 from langchain_ollama import ChatOllama
-from langgraph.graph import START, StateGraph
+from langgraph.graph import START, StateGraph, END
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain.agents import create_agent
@@ -38,6 +38,7 @@ llm_with_tools = llm.bind_tools(TOOLS)
 
 def assistant_node(state: AgentState):
     response = llm_with_tools.invoke(state["messages"])
+    print("tool calls made on this assistant now",response.tool_calls)
     return {"messages": [response]}
 
 
@@ -48,6 +49,7 @@ builder.add_node("tools", ToolNode(TOOLS))
 builder.add_edge(START, "assistant")
 builder.add_conditional_edges("assistant", tools_condition)
 builder.add_edge("tools", "assistant")
+builder.add_edge("assistant", END)
 
 graph = builder.compile()
 

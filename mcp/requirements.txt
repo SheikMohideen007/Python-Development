@@ -1,0 +1,8 @@
+langchain
+langchain-core
+langchain-community
+langchain-mcp-adapters
+langchain-ollama>=0.1.0
+
+mcp
+fastapi
