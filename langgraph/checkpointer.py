@@ -71,7 +71,7 @@ builder.add_edge("step2", "dispatch")
 builder.add_edge("step3", "dispatch")
 builder.add_edge("done", END)
 
-graph = builder.compile()
+graph = builder.compile(checkpointer=checkpointer)
 
 
 def run_pipeline(input_value: int, checkpoint_id: str) -> PipelineState:
